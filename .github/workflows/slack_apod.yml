@@ -26,7 +26,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
           NASA_API_KEY: ${{ secrets.APOD_KEY }}
-        run: node apod.js
+        run: node post_apod.js
 
   manual_test:
     name: Manually Test NASA APOD
@@ -48,4 +48,4 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
           NASA_API_KEY: ${{ secrets.APOD_KEY }}
-        run: node apod.js
+        run: node post_apod.js
