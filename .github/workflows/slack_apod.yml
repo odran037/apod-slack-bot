@@ -1,12 +1,13 @@
-name: Daily NASA APOD to Slack
+name: NASA APOD to Slack
 
 on:
   schedule:
-    - cron: '0 15 * * *' # Runs at 10 AM Eastern Time (3 PM UTC)
-  workflow_dispatch: # Allows manual triggering
+    - cron: '0 14 * * *' # 10 AM Eastern (UTC is 4 hours ahead)
+  workflow_dispatch: # Enables manual trigger
 
 jobs:
-  post-nasa-apod:
+  daily_apod:
+    name: Send NASA APOD to Slack
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,10 +19,33 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install axios @slack/web-api
+        run: npm install
 
-      - name: Run script
+      - name: Run APOD script
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-        run: node post_apod.js
+          NASA_API_KEY: ${{ secrets.APOD_KEY }}
+        run: node apod.js
+
+  manual_test:
+    name: Manually Test NASA APOD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run APOD script (manual)
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          NASA_API_KEY: ${{ secrets.APOD_KEY }}
+        run: node apod.js
