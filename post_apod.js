@@ -11,15 +11,9 @@ async function postToSlack() {
     const { title, url, hdurl, explanation } = response.data;
     const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 <${hdurl}|HD Image>\n_${explanation}_`;
     const slack = new WebClient(SLACK_BOT_TOKEN);
-    
-    const res = await slack.conversations.open({
-        users: "D045RMU9JBF"
-    });
-    
-    console.log("res.channel.id", res.channel.id);
 
     await slack.chat.postMessage({
-      channel: "D045RMU9JBF", //SLACK_CHANNEL,
+      channel: SLACK_CHANNEL,
       text: message,
       unfurl_links: true,
       unfurl_media: true,
