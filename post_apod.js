@@ -9,14 +9,24 @@ async function postToSlack() {
   try {
     const response = await axios.get(NASA_API_URL);
     const { title, url, hdurl, explanation } = response.data;
-    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 <${hdurl}|HD Image>\n_${explanation}_`;
+    // const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 <${hdurl}|HD Image>\n_${explanation}_`;
+    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 HD Image: <${hdurl}|Click here>\n_${explanation}_`;
+
+    
     const slack = new WebClient(SLACK_BOT_TOKEN);
 
+    // await slack.chat.postMessage({
+    //   channel: SLACK_CHANNEL,
+    //   text: message,
+    //   unfurl_links: true,
+    //   unfurl_media: true,
+    //   mrkdwn: true
+    // });
     await slack.chat.postMessage({
       channel: SLACK_CHANNEL,
       text: message,
-      unfurl_links: true,
-      unfurl_media: true,
+      unfurl_links: true,  // Unfurl the main `url`
+      unfurl_media: false, // Prevents images/videos from auto-displaying
       mrkdwn: true
     });
 
