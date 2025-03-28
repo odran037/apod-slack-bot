@@ -26,8 +26,4 @@ async function postToSlack() {
   }
 }
 
-// postToSlack();
-
-console.log("SLACK_BOT_TOKEN", SLACK_BOT_TOKEN)
-console.log("SLACK_CHANNEL", SLACK_CHANNEL)
-console.log("APOD_KEY", APOD_KEY)
+postToSlack();
