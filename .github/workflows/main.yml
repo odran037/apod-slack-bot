@@ -2,7 +2,7 @@ name: NASA APOD to Slack schedule
 
 on:
   schedule:
-    - cron: '0 14 * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch: # Enables manual trigger
 
 jobs:
