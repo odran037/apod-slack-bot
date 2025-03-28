@@ -1,0 +1,30 @@
+name: NASA APOD to Slack main
+
+on:
+  schedule:
+    - cron: '35 18 * * *' # 11 AM
+  workflow_dispatch: # Enables manual trigger
+
+jobs:
+  daily_apod:
+    name: Send NASA APOD to Slack
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run APOD script
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          APOD_KEY: ${{ secrets.APOD_KEY }}
+        run: node post_apod.js
