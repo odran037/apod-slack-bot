@@ -1,9 +1,9 @@
 name: NASA APOD to Slack
 
-on:
-  schedule:
-    - cron: '0 14 * * *' # 10 AM Eastern (UTC is 4 hours ahead)
-  workflow_dispatch: # Enables manual trigger
+# on:
+#   schedule:
+#     - cron: '0 14 * * *' # 10 AM Eastern (UTC is 4 hours ahead)
+#   workflow_dispatch: # Enables manual trigger
 
 jobs:
   daily_apod:
