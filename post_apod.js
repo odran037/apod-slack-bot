@@ -16,8 +16,7 @@ async function postToSlack() {
       channel: SLACK_CHANNEL,
       text: message,
       unfurl_links: true,
-      unfurl_media: true,
-      mrkdwn: true
+      unfurl_media: true
     });
 
     console.log("Posted to Slack successfully!");
