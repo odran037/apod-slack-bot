@@ -8,16 +8,26 @@ const NASA_API_URL = `https://api.nasa.gov/planetary/apod?api_key=${APOD_KEY}`;
 async function postToSlack() {
   try {
     const response = await axios.get(NASA_API_URL);
-    const { title, url, hdurl, explanation } = response.data;
-    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n_${explanation}_`;    
+    const { title, url, explanation } = response.data;
+    // const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n_${explanation}_`;    
+    // const slack = new WebClient(SLACK_BOT_TOKEN);
+
+    // await slack.chat.postMessage({
+    //   channel: SLACK_CHANNEL,
+    //   text: message,
+    //   unfurl_links: true,
+    //   unfurl_media: true
+    // });
+    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n_${explanation}_`;
     const slack = new WebClient(SLACK_BOT_TOKEN);
 
     await slack.chat.postMessage({
       channel: SLACK_CHANNEL,
       text: message,
       unfurl_links: true,
-      unfurl_media: true
+      unfurl_media: true,
     });
+
 
     console.log("Posted to Slack successfully!");
   } catch (error) {
