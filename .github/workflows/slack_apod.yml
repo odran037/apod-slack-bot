@@ -1,4 +1,4 @@
-name: NASA APOD to Slack
+name: NASA APOD to Slack - manual
 
 on:
   workflow_dispatch:  # Enables manual trigger only
