@@ -9,51 +9,15 @@ async function postToSlack() {
   try {
     const response = await axios.get(NASA_API_URL);
     const { title, url, hdurl, explanation } = response.data;
-    // const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 <${hdurl}|HD Image>\n_${explanation}_`;
-    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 HD Image: <${hdurl}|Click here>\n_${explanation}_`;
-
-
-    
+    const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n_${explanation}_`;    
     const slack = new WebClient(SLACK_BOT_TOKEN);
 
-    // await slack.chat.postMessage({
-    //   channel: SLACK_CHANNEL,
-    //   text: message,
-    //   unfurl_links: true,
-    //   unfurl_media: true,
-    //   mrkdwn: true
-    // });
-    // await slack.chat.postMessage({
-    //   channel: SLACK_CHANNEL,
-    //   text: message,
-    //   unfurl_links: false,
-    //   unfurl_media: false,
-    //   mrkdwn: true
-    // });
     await slack.chat.postMessage({
       channel: SLACK_CHANNEL,
-      text: `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n_${explanation}_`,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n_${explanation}_`
-          }
-        },
-        {
-          type: "image",
-          image_url: url, // Shows the APOD image
-          alt_text: title
-        },
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `🔗 <${hdurl}|HD Image>` // Clickable HD image link
-          }
-        }
-      ]
+      text: message,
+      unfurl_links: true,
+      unfurl_media: true,
+      mrkdwn: true
     });
 
     console.log("Posted to Slack successfully!");
