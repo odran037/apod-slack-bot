@@ -12,6 +12,7 @@ async function postToSlack() {
     // const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 <${hdurl}|HD Image>\n_${explanation}_`;
     const message = `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n${url}\n🔗 HD Image: <${hdurl}|Click here>\n_${explanation}_`;
 
+
     
     const slack = new WebClient(SLACK_BOT_TOKEN);
 
@@ -22,12 +23,37 @@ async function postToSlack() {
     //   unfurl_media: true,
     //   mrkdwn: true
     // });
+    // await slack.chat.postMessage({
+    //   channel: SLACK_CHANNEL,
+    //   text: message,
+    //   unfurl_links: false,
+    //   unfurl_media: false,
+    //   mrkdwn: true
+    // });
     await slack.chat.postMessage({
       channel: SLACK_CHANNEL,
-      text: message,
-      unfurl_links: true,  // Unfurl the main `url`
-      unfurl_media: false, // Prevents images/videos from auto-displaying
-      mrkdwn: true
+      text: `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n_${explanation}_`,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `🌌 *NASA Astronomy Picture of the Day* 🌌\n*${title}*\n_${explanation}_`
+          }
+        },
+        {
+          type: "image",
+          image_url: url, // Shows the APOD image
+          alt_text: title
+        },
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: `🔗 <${hdurl}|HD Image>` // Clickable HD image link
+          }
+        }
+      ]
     });
 
     console.log("Posted to Slack successfully!");
